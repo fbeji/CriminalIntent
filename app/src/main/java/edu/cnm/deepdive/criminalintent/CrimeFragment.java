@@ -1,7 +1,8 @@
 package edu.cnm.deepdive.criminalintent;
 
+import static android.widget.CompoundButton.*;
+
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 
 import android.support.v4.app.Fragment;
 import android.text.Editable;
@@ -22,7 +23,6 @@ public class CrimeFragment extends Fragment {
   private Button mDateButton;
   private CheckBox mSolvedCheckBox;
 
-
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -30,47 +30,44 @@ public class CrimeFragment extends Fragment {
 
   }
 
-
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     View v = inflater.inflate(R.layout.fragment_crime, container, false);
 
+    mDateButton = (Button) v.findViewById(R.id.crime_date);
+    mDateButton.setText(mCrime.getDate().toString());
+    mDateButton.setEnabled(false);
     mTitleField = (EditText) v.findViewById(R.id.crime_title);
-
     mSolvedCheckBox = (CheckBox)v.findViewById(R.id.crime_solved);
-    mSolvedCheckBox.setOnCheckedChangeListener(new OnCheckedChangeListener(){
-
+    mSolvedCheckBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
       @Override
-      public void onCheckedChanged(CompoundButton buttonView,boolean isChecked){
+      public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-        mCrime.setSolved(isChecked);
       }
-
-      });
-
+    });
 
     mTitleField.addTextChangedListener(new TextWatcher() {
       @Override
-      public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
+      public void beforeTextChanged(
+          CharSequence s, int start, int count, int after) {
+        // This space is intentionally left blank
       }
 
       @Override
-      public void onTextChanged(CharSequence s, int start, int before, int count) {
+      public void onTextChanged(
+          CharSequence s, int start, int before, int count) {
         mCrime.setTitle(s.toString());
       }
 
       @Override
       public void afterTextChanged(Editable s) {
-
+        // This one too
       }
-
-
     });
-    mDateButton = (Button) v.findViewById(R.id.crime_date);
-    mDateButton.setText(mCrime.getDate().toString());
-    mDateButton.setEnabled(false);
+
     return v;
   }
+
+
 }
